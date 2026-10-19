@@ -50,7 +50,7 @@ const searchCompanies = async (query) => {
                 setIsLoading(false);
                 return;
             }
-            const url = `https://backend.e-fuldmagt.com/general/check-cvr-by-name-or-number-by-admin?${queryParam}=${query}`;
+            const url = `${import.meta.env.VITE_API_KEY}/general/check-cvr-by-name-or-number-by-admin?${queryParam}=${query}`;
 
             const response = await axios.get(url, {
                 headers: {

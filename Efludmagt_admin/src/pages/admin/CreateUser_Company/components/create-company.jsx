@@ -154,6 +154,21 @@ const CreateCompany = () => {
                 {/* The CompanySearchBar component */}
                 <CompanySearchBar setSelectedCompany={setSelectedCompany} />
 
+                {/* The search fills the CVR; it can also be typed, so a company can be created
+                    when the CVR lookup (cvrapi.dk) is unavailable. */}
+                <input
+                  type="text"
+                  id="cvrNumber"
+                  name="cvrNumber"
+                  inputMode="numeric"
+                  maxLength={8}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.cvrNumber}
+                  className="mt-2 rounded-md bg-gray-50 border border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 block w-full px-4 py-2.5 text-sm"
+                  placeholder="CVR number (8 digits)"
+                />
+
                 {/* We keep the CVR error message. 
                   If the user tries to submit without selecting a company,
                   this validation will catch it.

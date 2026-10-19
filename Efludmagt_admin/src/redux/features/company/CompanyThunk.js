@@ -6,7 +6,7 @@ export const createNewCompany = createAsyncThunk(
   async (companyData, { rejectWithValue }) => {
     try {
       const response = await axios.post(
-        "https://backend.e-fuldmagt.com/admin/companies",
+        `${import.meta.env.VITE_API_KEY}/admin/companies`,
         companyData
       );
       

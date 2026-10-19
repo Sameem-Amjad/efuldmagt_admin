@@ -6,7 +6,7 @@ export const createUser = createAsyncThunk(
   async (userData, { rejectWithValue }) => {
     try {
       const response = await fetch(
-        "https://backend.e-fuldmagt.com/admin/users",
+        `${import.meta.env.VITE_API_KEY}/admin/users`,
         {
           method: "POST",
           headers: {

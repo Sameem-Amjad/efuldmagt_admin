@@ -44,6 +44,8 @@ const EditUser = () => {
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  // Stored country codes come as "45" (website sign-up, seed) or "+45" (admin); the select uses "+45".
+  const [codeHasPlus, setCodeHasPlus] = useState(true);
 
   // --- Initialize Formik for form state management ---
   const formik = useFormik({
@@ -65,7 +67,10 @@ const EditUser = () => {
     onSubmit: async (values, { setSubmitting }) => {
       const payload = {
         email: values.email,
-        phone: { countryCode: values.phoneCountryCode, number: values.phoneNumber },
+        phone: {
+          countryCode: codeHasPlus ? values.phoneCountryCode : values.phoneCountryCode.replace(/^\+/, ""),
+          number: values.phoneNumber,
+        },
         name: { firstName: values.firstName, lastName: values.lastName },
         address: {
           address: values.address,
@@ -130,6 +135,9 @@ const EditUser = () => {
             lastName = user.name.lastName || "";
           }
 
+          const storedCode = user.phone?.countryCode ? String(user.phone.countryCode) : "+45";
+          setCodeHasPlus(storedCode.startsWith("+"));
+
           formik.setValues({
             firstName,
             lastName,
@@ -139,7 +147,7 @@ const EditUser = () => {
             city: user.address?.city || "",
             country: user.address?.country || formik.initialValues.country,
             email: user.email || "",
-            phoneCountryCode: user.phone?.countryCode || "+45",
+            phoneCountryCode: storedCode.startsWith("+") ? storedCode : `+${storedCode}`,
             phoneNumber: user.phone?.number || "",
             // admin: user.admin || false,
             // locked: user.locked || false,

@@ -93,7 +93,7 @@ const ReviewFludgments = () => {
                     {/* Header Section */}
                     <div className="px-6 py-5 border-b border-gray-100 flex flex-col md:flex-row items-center gap-6">
                         <div className="flex flex-col min-w-fit">
-                            <h2 className="text-xl font-bold text-gray-800">Review Fludgments</h2>
+                            <h2 className="text-xl font-bold text-gray-800">All e-Fuldmagts</h2>
                             <p className="text-xs text-gray-500">Manage and search your forms</p>
                         </div>
                         

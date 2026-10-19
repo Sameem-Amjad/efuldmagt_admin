@@ -39,7 +39,7 @@ const UpdateTitleSection = ({ title, setTitle, themeColor = "#3cb4e4" }) => {
   return (
     <div className="space-y-3 p-6 rounded-2xl bg-gray-50/50 border border-gray-100">
       <Label htmlFor="title" className="text-sm font-bold text-gray-700 uppercase tracking-wider">
-        Fuldgment Display Name
+        e-Fuldmagt Display Name
       </Label>
       
       <div className="flex gap-3">

@@ -75,7 +75,7 @@ const Users = () => {
       closeAllModals();
       toast.success(`${selectedUser.type} deleted successfully!`);
     } catch (err) {
-      toast.error("Failed to delete the user. Please try again.");
+      toast.error(typeof err === "string" && err ? err : "Failed to delete the user. Please try again.");
       setProcessError(err);
     }
     finally{
@@ -94,7 +94,7 @@ const Users = () => {
       closeAllModals();
       toast.success(`${selectedUser.type} suspended successfully!`);
     } catch (err) {
-      toast.error("Failed to suspend the user. Please try again.");
+      toast.error(typeof err === "string" && err ? err : "Failed to suspend the user. Please try again.");
       setProcessError(err);
     }finally{
       setIsProcessing(false);
@@ -124,7 +124,7 @@ const Users = () => {
       toast.success(`${selectedUser.type} reactivated successfully!`);
 
     } catch (err) {
-      toast.error("Failed to reactivate. Please try again.");
+      toast.error(typeof err === "string" && err ? err : "Failed to reactivate. Please try again.");
       // Shows error inside the modal
       setProcessError(err.message || "An unknown error occurred."); 
     } finally {

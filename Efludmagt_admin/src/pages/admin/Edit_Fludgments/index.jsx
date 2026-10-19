@@ -86,6 +86,16 @@ const EditFuldgment = () => {
     }
   };
 
+  // The form is filled only from the list's router state. Opened by URL or refreshed it would be
+  // empty, and "Update" would overwrite the template with blank values, so go back to the list.
+  useEffect(() => {
+    if (!initialData) {
+      toast.error("Open the e-fuldmagt to edit from the list.");
+      navigate("/admin/reviewFludgments", { replace: true });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   useEffect(() => {
     if (formData.visibility === "specificUsersAndCompanies") {
       dispatch(fetchEntities("users"));
@@ -146,7 +156,7 @@ const EditFuldgment = () => {
         <div className="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden w-full">
           {/* Header Action - ✅ Added Disabled State & Spinner */}
           <div className="px-8 py-6 border-b border-gray-100 flex justify-between items-center bg-white sticky top-0 z-10">
-            <h1 className="text-2xl font-bold text-gray-800">Edit Fuldgment</h1>
+            <h1 className="text-2xl font-bold text-gray-800">Edit e-Fuldmagt</h1>
           
           </div>
 

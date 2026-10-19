@@ -264,6 +264,8 @@ const EditCompany = () => {
   // Remove updateError and updateSuccess as we will use react-hot-toast
   const [suspendError, setSuspendError] = useState("");
   const [isLocked, setIsLocked] = useState(false); // Track if the company is locked
+  // Stored country codes come as "45" (seed) or "+45" (admin); the select uses "+45".
+  const [codeHasPlus, setCodeHasPlus] = useState(true);
 
   // Fetch existing company data
   useEffect(() => {
@@ -272,7 +274,7 @@ const EditCompany = () => {
       setFetchError("");
       try {
         const response = await fetch(
-          `https://backend.e-fuldmagt.com/admin/companies/${id}`,
+          `${import.meta.env.VITE_API_KEY}/admin/companies/${id}`,
           {
             method: "GET",
             headers: {
@@ -291,6 +293,8 @@ const EditCompany = () => {
         const company = data.data.company; // Adjust based on your API response structure
 
         // Populate form with existing data
+        const storedCode = company.phone?.countryCode ? String(company.phone.countryCode) : "+45";
+        setCodeHasPlus(storedCode.startsWith("+"));
         setFormData({
           search: "",
           cvrNumber: company.cvr || "",
@@ -302,7 +306,7 @@ const EditCompany = () => {
           city: company.address?.city || "",
           country: company.address?.country || "Denmark",
           email: company.email || "",
-          phoneCountryCode: company.phone?.countryCode || "+45",
+          phoneCountryCode: storedCode.startsWith("+") ? storedCode : `+${storedCode}`,
           phoneNumber: company.phone?.number || "",
         });
 
@@ -334,7 +338,7 @@ const EditCompany = () => {
     // Building the payload body
     const payload = {
       phone: {
-        countryCode: formData.phoneCountryCode,
+        countryCode: codeHasPlus ? formData.phoneCountryCode : formData.phoneCountryCode.replace(/^\+/, ""),
         number: formData.phoneNumber,
       },
       email: formData.email,
@@ -352,13 +356,12 @@ const EditCompany = () => {
 
     try {
       const { data } = await axios.put(
-        `https://backend.e-fuldmagt.com/admin/companies/${id}`,
+        `${import.meta.env.VITE_API_KEY}/admin/companies/${id}`,
         payload,
         {
           headers: {
             "Content-Type": "application/json",
-            // Include authorization headers if required
-            // "Authorization": `Bearer YOUR_TOKEN_HERE`,
+            Authorization: "Bearer " + localStorage.getItem("authToken"),
           },
         }
       );
@@ -381,13 +384,12 @@ const EditCompany = () => {
     setSuspendError("");
     try {
       const response = await fetch(
-        `https://backend.e-fuldmagt.com/admin/companies/${id}`,
+        `${import.meta.env.VITE_API_KEY}/admin/companies/${id}`,
         {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
-            // Include authorization headers if required
-            // "Authorization": `Bearer YOUR_TOKEN_HERE`,
+            Authorization: "Bearer " + localStorage.getItem("authToken"),
           },
           body: JSON.stringify({ locked: true }),
         }

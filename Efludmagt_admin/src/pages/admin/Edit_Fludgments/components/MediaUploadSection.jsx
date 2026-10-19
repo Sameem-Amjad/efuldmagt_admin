@@ -45,7 +45,7 @@ const MediaUploadSection = ({ formData, setFormData, themeColor = "#3cb4e4" }) =
     <div className="grid grid-cols-1 md:grid-cols-2 gap-8 p-6 rounded-2xl bg-gray-50/50 border border-gray-100">
       {/* Icon Section */}
       <div className="space-y-3">
-        <Label className="text-sm font-bold text-gray-700 uppercase tracking-wider">Fuldgment Icon</Label>
+        <Label className="text-sm font-bold text-gray-700 uppercase tracking-wider">e-Fuldmagt Icon</Label>
         <Dialog open={iconDialogOpen} onOpenChange={setIconDialogOpen}>
           <DialogTrigger asChild>
             <div className="relative h-40 border-2 border-dashed border-gray-200 rounded-2xl flex flex-col items-center justify-center bg-white hover:border-[#3cb4e4] transition-all cursor-pointer group overflow-hidden">

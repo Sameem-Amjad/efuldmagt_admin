@@ -94,7 +94,8 @@ export const deleteEntity = createAsyncThunk(
         'Authorization': 'Bearer ' + localStorage.getItem('authToken')
       }
     });
-      if (!res.ok) throw new Error('Delete failed');
+      // keep the server's reason (e.g. the demo admin's "can't delete" message)
+      if (!res.ok) throw new Error((await res.json().catch(() => ({}))).message || 'Delete failed');
       return { id, type: type.slice(0, -1) }; // Return the ID and type (user or company)
     } catch (err) {
       return rejectWithValue(err.message);
@@ -115,7 +116,7 @@ export const suspendEntity = createAsyncThunk(
         },
         body: JSON.stringify({ locked: true })
       });
-      if (!res.ok) throw new Error('Suspend failed');
+      if (!res.ok) throw new Error((await res.json().catch(() => ({}))).message || 'Suspend failed');
       return { id, type: type.slice(0, -1) }; // Return the ID and type (user or company)
     } catch (err) {
       return rejectWithValue(err.message);

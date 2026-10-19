@@ -15,7 +15,7 @@ import { useEffect, useState } from "react";
 import { Icons } from "@/lib/Icons";
 import { getMenuList } from "@/lib/admin-menu-list";
 import { auth } from "../../../firebase";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { clearUser } from "@/redux/features/user/userSlice";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
@@ -32,6 +32,10 @@ export function Menu({ isOpen }) {
     setMenuList(list);
   }, [pathname]);
 
+  const { user } = useSelector((state) => state.user);
+  const adminName = user?.name || "Admin";
+  const initials = adminName.split(" ").map((w) => w[0]).join("").slice(0, 2).toUpperCase();
+
   const handleLogout = async () => {
     localStorage.removeItem('user');
     localStorage.removeItem('authToken');
@@ -45,14 +49,12 @@ export function Menu({ isOpen }) {
       <ul className="flex flex-col px-2 flex-1">
         <ScrollArea className="flex grow w-full">
           <div className="flex flex-col items-center justify-center w-full h-20 mb-12 mt-12 mb-12">
+            {/* The signed-in admin (this used to be a placeholder name and stock photo) */}
             <Avatar className="h-16 w-16">
-              <AvatarImage 
-              className="object-cover w-full h-full rounded-full"
-              src="https://plus.unsplash.com/premium_photo-1669130247985-c7cee1e1abb0?q=80&w=1965&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" />
-              <AvatarFallback>CN</AvatarFallback>
+              <AvatarFallback className="bg-[#3cb4e4] text-white text-xl font-semibold">{initials}</AvatarFallback>
             </Avatar>
             <div className="flex items-center justify-center flex-col ml-4 mt-4">
-              <p className="text-lg font-semibold">Indica Watson</p>
+              <p className="text-lg font-semibold">{adminName}</p>
               <p className="text-xs font-light text-[#7F7F7F]">Logged in as Admin</p>
             </div>
           </div>

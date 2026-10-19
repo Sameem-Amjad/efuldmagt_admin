@@ -18,8 +18,8 @@ const Card = ({ icon, primaryValue, secondaryValue, label }) => {
 
 Card.propTypes = {
   icon: PropTypes.string.isRequired,
-  primaryValue: PropTypes.string.isRequired,
-  secondaryValue: PropTypes.string.isRequired,
+  primaryValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  secondaryValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   label: PropTypes.string.isRequired,
 };
 

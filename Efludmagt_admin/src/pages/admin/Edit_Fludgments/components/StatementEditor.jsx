@@ -27,8 +27,9 @@ const StatementEditor = ({ statement, setStatement, availableFields, themeColor 
           setStatement(statement + placeholder);
       }
     } else {
-      // Fallback for plain text: wrap everything in <p> if not already there
-      setStatement(`<p>${statement}${placeholder}</p>`);
+      // Plain text (every statement saved by the create wizard): just append. Wrapping it in
+      // <p> saved the tags into the statement, and the website shows them as text.
+      setStatement(`${statement}${placeholder}`);
     }
   };
 

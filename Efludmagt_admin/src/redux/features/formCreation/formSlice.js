@@ -6,7 +6,7 @@ export const submitForm = createAsyncThunk(
   async (formData, { rejectWithValue }) => {
     try {
       const response = await fetch(
-        "https://backend.e-fuldmagt.com/admin/fuldmagt-forms",
+        `${import.meta.env.VITE_API_KEY}/admin/fuldmagt-forms`,
         {
           method: "POST",
           headers: {
@@ -41,7 +41,7 @@ export const uploadImage = createAsyncThunk(
 
       // Get presigned URL
       const apiResponse = await fetch(
-        "https://backend.e-fuldmagt.com/general/get-presigned-url",
+        `${import.meta.env.VITE_API_KEY}/general/get-presigned-url`,
         {
           method: "POST",
           headers: {
