@@ -1,0 +1,8 @@
+# Secrets and build output stay out of this repo
+.env
+.env.*
+!.env.example
+node_modules/
+dist/
+.DS_Store
+git.zip
